@@ -6,7 +6,6 @@ import torch.nn as nn
 import math
 import copy
 import argparse
-import tensorboardX
 
 from tqdm import tqdm
 from VGG import myVGG
@@ -26,7 +25,6 @@ def modifedStyleTransfer(opt):
     DN = de_norm()
     os.makedirs("./log/%s/"%opt.outf, exist_ok=True)
     os.makedirs("./checkpoints/%s/"%opt.outf, exist_ok=True)
-    train_writer = tensorboardX.SummaryWriter("./log/%s/"%opt.outf)
 
     dataloader = DataLoader(
             ST_dataset(root=opt.root, name=opt.name, mode='no_align'),
