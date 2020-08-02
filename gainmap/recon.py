@@ -183,6 +183,7 @@ def trainRC(opt):
             Loss, out = model(data[0].cuda(), data[1].cuda())
 
             if iters%50 == 0:
+                print("total_loss", Loss.item(), iters)
                 # train_writer.add_scalar("total_loss", Loss.item(), iters)
 
             if iters%100 == 0:
@@ -193,12 +194,15 @@ def trainRC(opt):
                         _, out = model(test[0].cuda(), test[1].cuda())
 
                         temp_image = make_grid(torch.clamp(DN(test[1][0]).unsqueeze(0),0,1), nrow=1, padding=0, normalize=False)
+                        print('style', temp_image, iters+k2)
                         # train_writer.add_image('style', temp_image, iters+k2)
 
                         temp_image = make_grid(torch.clamp(DN(test[0][0]).unsqueeze(0),0,1), nrow=1, padding=0, normalize=False)
+                        print('face', temp_image, iters+k2)
                         # train_writer.add_image('face', temp_image, iters+k2)
 
                         temp_image = make_grid(torch.clamp(DN(out[0]).unsqueeze(0), 0, 1), nrow=1, padding=0, normalize=False)
+                        print('out', temp_image, iters+k2)
                         # train_writer.add_image('out', temp_image, iters+k2)
 
             Loss.backward(retain_graph=True)
