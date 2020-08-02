@@ -9,7 +9,6 @@ import torch
 import torch.nn as nn
 import math
 import argparse
-import tensorboardX
 
 from tqdm import tqdm
 from VGG import myVGG
@@ -157,7 +156,6 @@ def trainRC(opt):
         model.load_state_dict(torch.load('checkpoints/rec/%s/model_%d.pth' % (opt.outf, opt.start)))
     os.makedirs("./log/rec/%s/"%opt.outf, exist_ok=True)
     os.makedirs("./checkpoints/rec/%s/"%opt.outf, exist_ok=True)
-    train_writer = tensorboardX.SummaryWriter("./log/rec/%s/"%opt.outf)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-2, weight_decay=1e-8)
     scheduler = lr_scheduler.StepLR(optimizer, step_size=500, gamma=0.1)
@@ -185,7 +183,7 @@ def trainRC(opt):
             Loss, out = model(data[0].cuda(), data[1].cuda())
 
             if iters%50 == 0:
-                train_writer.add_scalar("total_loss", Loss.item(), iters)
+                # train_writer.add_scalar("total_loss", Loss.item(), iters)
 
             if iters%100 == 0:
                 index = 0
@@ -195,13 +193,13 @@ def trainRC(opt):
                         _, out = model(test[0].cuda(), test[1].cuda())
 
                         temp_image = make_grid(torch.clamp(DN(test[1][0]).unsqueeze(0),0,1), nrow=1, padding=0, normalize=False)
-                        train_writer.add_image('style', temp_image, iters+k2)
+                        # train_writer.add_image('style', temp_image, iters+k2)
 
                         temp_image = make_grid(torch.clamp(DN(test[0][0]).unsqueeze(0),0,1), nrow=1, padding=0, normalize=False)
-                        train_writer.add_image('face', temp_image, iters+k2)
+                        # train_writer.add_image('face', temp_image, iters+k2)
 
                         temp_image = make_grid(torch.clamp(DN(out[0]).unsqueeze(0), 0, 1), nrow=1, padding=0, normalize=False)
-                        train_writer.add_image('out', temp_image, iters+k2)
+                        # train_writer.add_image('out', temp_image, iters+k2)
 
             Loss.backward(retain_graph=True)
             optimizer.step()
@@ -218,7 +216,6 @@ def recon(opt):
     model = VGGRC(opt).cuda()
     model.load_state_dict(torch.load('checkpoints/rec/%s/model_%d.pth' % (opt.outf, opt.start)))
 
-    train_writer = tensorboardX.SummaryWriter("./log/img/%s/"%opt.outf)
     os.makedirs("./checkpoints/img/%s/"%opt.outf, exist_ok=True)
     testloader = DataLoader(
             ST_dataset(root=opt.root, name=opt.name, mode='pairedVGG'),
@@ -238,7 +235,7 @@ def recon(opt):
         
         out = model.net_forward(Maps)
         temp_image = make_grid(torch.clamp(DN(out[0]).unsqueeze(0), 0, 1), nrow=1, padding=0, normalize=False)
-        train_writer.add_image('outimg', temp_image, k)
+        # train_writer.add_image('outimg', temp_image, k)
         #print(temp_image.cpu().detach().numpy().shape)
         m = cv2.imwrite(
             "./checkpoints/img/%s/%d.png"%(opt.outf, k),

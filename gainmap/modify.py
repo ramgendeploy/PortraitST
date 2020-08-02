@@ -222,11 +222,11 @@ def StyleTransfer(opt):
                 view_shape = (4, int(Maps[index].shape[1]/4), Maps[index].shape[2],  Maps[index].shape[3])
                 print(view_shape)
                 temp_image = make_grid(Maps[index].reshape(view_shape)[:,:3,:,:], nrow=4, padding=0, normalize=True)
-                train_writer.add_image('Gain Map', temp_image, 0)
+                # train_writer.add_image('Gain Map', temp_image, 0)
                 temp_image = make_grid(style_feats[index].reshape(view_shape)[:,:3,:,:], nrow=4, padding=0, normalize=True)
-                train_writer.add_image('style_feat_4', temp_image, 0)
+                # train_writer.add_image('style_feat_4', temp_image, 0)
                 temp_image = make_grid(input_feats[index].reshape(view_shape)[:,:3,:,:], nrow=4, padding=0, normalize=True)
-                train_writer.add_image('input_feat_4', temp_image, 0)
+                # train_writer.add_image('input_feat_4', temp_image, 0)
 
                 # Initialize the output.
                 #output = data[1].cuda()
@@ -265,7 +265,7 @@ def StyleTransfer(opt):
                     if iters%opt.iter_show == 0 and iters != 0:
                         # record result pics.
                         temp_image = make_grid(torch.clamp(DN(output[0]).unsqueeze(0),0,1), nrow=opt.batch_size, padding=0, normalize=False)
-                        train_writer.add_image('temp result', temp_image, iters+images*opt.iter)
+                        # train_writer.add_image('temp result', temp_image, iters+images*opt.iter)
 
                         if iters%(20) == 0 and iters!=0:
                             if opt.optimode == 'dataset':
