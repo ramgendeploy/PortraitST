@@ -2,7 +2,7 @@ from __future__ import print_function
 import torch.utils.data as data
 import os
 import sys
-sys.path.insert(1, '../alignment')
+sys.path.insert(1, '/content/PortraitST/alignment')
 from alignment import align
 import torch
 import random
