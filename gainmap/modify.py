@@ -5,7 +5,6 @@ import torch
 import cv2
 import math
 import argparse
-import tensorboardX
 
 from tqdm import tqdm
 from VGG import myVGG
@@ -162,7 +161,6 @@ def StyleTransfer(opt):
     DN = de_norm()
     os.makedirs("./log/%s/"%opt.outf, exist_ok=True)
     os.makedirs("./checkpoints/%s/"%opt.outf, exist_ok=True)
-    train_writer = tensorboardX.SummaryWriter("./log/%s/"%opt.outf)
 
     modefactor = 1 # number of face images
     counter = 0 #count for dataset.
