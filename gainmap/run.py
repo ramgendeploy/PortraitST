@@ -21,10 +21,10 @@ from recon import VGGRC
 def modifedStyleTransfer(opt):
     print('loading VGG models......')
     model = VGGRC(opt).cuda()
-    model.load_state_dict(torch.load('../weight/model_%d.pth' % (opt.start)))
+    model.load_state_dict(torch.load('/content/PortraitST/weight/model_%d.pth' % (opt.start)))
     DN = de_norm()
-    os.makedirs("./log/%s/"%opt.outf, exist_ok=True)
-    os.makedirs("./checkpoints/%s/"%opt.outf, exist_ok=True)
+    os.makedirs("/content/log/%s/"%opt.outf, exist_ok=True)
+    os.makedirs("/content/checkpoints/%s/"%opt.outf, exist_ok=True)
 
     dataloader = DataLoader(
             ST_dataset(root=opt.root, name=opt.name, mode='no_align'),
@@ -109,7 +109,7 @@ def modifedStyleTransfer(opt):
                     train_writer.add_image('temp result', temp_image, iters+images*opt.iter)
 
                 if iters%(opt.iter_show) == 0:
-                    save_image(temp_image, "../test/result/%d_%d.png"%(k, iters))
+                    save_image(temp_image, "/content/PortraitST/test/result/%d_%d.png"%(k, iters))
             else:
                 optimizer.zero_grad()
                 input_feats = Maplist
@@ -134,7 +134,7 @@ def modifedStyleTransfer(opt):
                     print(Loss_gain.item(), Loss_style.item())
 
                 if iters%(100) == 0:
-                    save_image(temp_image, "./checkpoints/%s/%d_%d.png"%(opt.outf, k, iters))
+                    save_image(temp_image, "/content/checkpoints/%s/%d_%d.png"%(opt.outf, k, iters))
 
             #optimizer.zero_grad()
             pbar.update(1)
