@@ -21,7 +21,7 @@ from recon import VGGRC
 def modifedStyleTransfer(opt):
     print('loading VGG models......')
     model = VGGRC(opt).cuda()
-    model.load_state_dict(torch.load('/content/PortraitST/weight/model_%d.pth' % (opt.start)))
+    model.load_state_dict(torch.load('/content/PortraitST/weights/model_%d.pth' % (opt.start)))
     DN = de_norm()
     os.makedirs("/content/log/%s/"%opt.outf, exist_ok=True)
     os.makedirs("/content/checkpoints/%s/"%opt.outf, exist_ok=True)
