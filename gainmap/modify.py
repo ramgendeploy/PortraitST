@@ -9,8 +9,8 @@ import argparse
 from tqdm import tqdm
 from VGG import myVGG
 from dataset import ST_dataset, RC_dataset, de_norm, decolor, make_trans
-sys.path.insert(1, '../options')
-sys.path.insert(1, '../refs')
+sys.path.insert(1, '/content/PortraitST/options')
+sys.path.insert(1, '/content/PortraitST/refs')
 from histogram_match import match_histograms
 from gainmap_option import FeatureOptions
 from torch.utils.data import DataLoader
