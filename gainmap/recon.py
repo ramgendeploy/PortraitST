@@ -38,7 +38,7 @@ class doubleConv(torch.nn.Module):
 class VGGRC(nn.Module):
     def __init__(self, opt, requires_grad=True):
         super(VGGRC, self).__init__()
-        self.VGG = myVGG(layers=opt.layers.split(','),BN=True)
+        self.VGG = myVGG(layers=opt.layers.split(','))
         self.pool = nn.MaxPool2d(2, stride=2)
 
         self.loss = torch.nn.MSELoss().cuda()
