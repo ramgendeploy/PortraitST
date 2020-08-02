@@ -30,11 +30,11 @@ class myVGG(nn.Module):
 
         if BN:
             self.original_model = models.vgg19_bn(pretrained=False)
-            self.original_model.load_state_dict(torch.load('../weights/vgg19_bn-c79401a0.pth'))
+            self.original_model.load_state_dict(torch.load('/content/PortraitST/weights/vgg19_bn-c79401a0.pth'))
             self.checkpoints = [3, 7, 10, 14, 17, 20, 23, 27, 30, 33, 36, 40, 43, 46, 49, 53]
         else:
             self.original_model = models.vgg19(pretrained=False)
-            self.original_model.load_state_dict(torch.load('../weights/vgg19-dcbb9e9d.pth'))
+            self.original_model.load_state_dict(torch.load('/content/PortraitST/weights/vgg19-dcbb9e9d.pth'))
             self.checkpoints = [2, 5, 7, 10, 12, 14, 16, 19, 21, 23, 25, 28, 30, 32, 34, 37]
 
         #if vgg_bn: 17, 17-30; vgg: 12, 12-21
