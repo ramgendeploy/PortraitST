@@ -10,7 +10,7 @@ import argparse
 from tqdm import tqdm
 from VGG import myVGG
 from dataset import RC_dataset, ST_dataset, de_norm
-sys.path.insert(1, '../options')
+sys.path.insert(1, '/content/PortraitST/options')
 from gainmap_option import FeatureOptions
 from torch.utils.data import DataLoader
 from torch.optim import lr_scheduler
